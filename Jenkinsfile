@@ -4,20 +4,20 @@ pipeline {
     stage('Docker Build') {
       steps {
 //        sh "docker build -t kmlaydin/podinfo:${env.BUILD_NUMBER} ."
-        sh "docker build -t 10.101.240.188:5000/podinfo:${env.BUILD_NUMBER} ."
+        sh "sudo docker build -t 10.101.240.188:5000/podinfo:${env.BUILD_NUMBER} ."
       }
     }
     stage('Docker Push') {
       steps {
 //        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 //          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh "docker push 10.101.240.188:5000/podinfo:${env.BUILD_NUMBER}"
+          sh "sudo docker push 10.101.240.188:5000/podinfo:${env.BUILD_NUMBER}"
 //        }
       }
     }
     stage('Docker Remove Image') {
       steps {
-        sh "docker rmi 10.101.240.188:5000/podinfo:${env.BUILD_NUMBER}"
+        sh "sudo docker rmi 10.101.240.188:5000/podinfo:${env.BUILD_NUMBER}"
       }
     }
     stage('Apply Kubernetes Files') {
